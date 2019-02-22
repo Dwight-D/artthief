@@ -15,18 +15,27 @@ ALBUMS = []
 
 #TODO: fix paths
 def init():
-    global parser
+    global BASE_DIR
+    BASE_DIR = Path(expanduser("~")) / '.config/artthief'
+    if not BASE_DIR.is_dir():
+        os.mkdir(BASE_DIR)
     parser = argparse.ArgumentParser(description='Download a random image from a list of imgur album hashes')
     parser.add_argument('--clean', '-c', action='store_true',
                         help='Cleans up old library images before running')
+    parser.add_argument('--download-dir', '-d', action='store', dest='downloads',
+                        help='Set download directory')
+    args = parser.parse_args()
 
-    global BASE_DIR
     global DOWNLOAD_DIR
-    BASE_DIR = Path(expanduser("~")) / '.config/artthief'
-    DOWNLOAD_DIR = BASE_DIR / 'library'
-    #TODO: Create library dir
+    if args.downloads:
+        DOWNLOAD_DIR = Path(args.downloads)
+    else:
+        DOWNLOAD_DIR = BASE_DIR / 'library'
     if not DOWNLOAD_DIR.is_dir():
         os.mkdir(DOWNLOAD_DIR)
+    if args.clean:
+        clean()
+
     config = BASE_DIR / 'albums.conf'
     with open(config, "r") as f:
         for link in f:
@@ -67,7 +76,7 @@ def download_image(image_json, title):
     print(path)   
 
 def create_file_name(image_json, album_hash):
-    path = str(datetime.date.today()) + album_hash + '-' + image_json['id']
+    path = str(datetime.date.today()) + '-' + album_hash + '-' + image_json['id']
     title = image_json['title'] 
     if title:
         title = ''.join(e for e in title if e.isalnum())
@@ -84,9 +93,6 @@ def clean():
 
 def main():
     init()
-    args = parser.parse_args()
-    if args.clean:
-        clean()
     download_random_image_from_albums(ALBUMS)
     
 main()

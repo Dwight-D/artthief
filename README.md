@@ -38,4 +38,4 @@ Feel free to open an issue or contact me if you have other issues.
 
 #### About download location
 
-Images are downloaded to ~/.config/artthief/library currently. While this may not be great design I didn't want to pollute the home directory unnecessarily for such a simple program, so I opted to place them together with the config. I may add in the possibility to configure different download directories at a later time.
+Images are downloaded to ~/.config/artthief/library by default. This can be overridden with `--download-dir / -d /download/path`
