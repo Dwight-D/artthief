@@ -5,7 +5,6 @@ import os
 import random
 import json
 import requests
-import urllib.request
 import datetime
 from pathlib import Path
 import argparse
@@ -68,11 +67,13 @@ def download_random_image_from_albums(albums):
     data = get_json_data_from_response(r)
     image = get_random_image_from_album_json(data)
     title = create_file_name(image, album_hash)
-    download_image(image, title)
+    download_image(image['link'], title)
 
-def download_image(image_json, title):
+def download_image(url, title):
     path = DOWNLOAD_DIR / title
-    urllib.request.urlretrieve (image_json['link'], path)
+    r = requests.get(url)
+    with open(path, 'wb') as f:  
+        f.write(r.content)
     print(path)   
 
 def create_file_name(image_json, album_hash):
@@ -82,8 +83,6 @@ def create_file_name(image_json, album_hash):
         title = ''.join(e for e in title if e.isalnum())
         path += '-' +title
     path += '.jpg'
-    
-    #path = path.replace(' ','')
     return path
 
 def clean():
