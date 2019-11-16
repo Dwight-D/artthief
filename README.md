@@ -32,7 +32,7 @@ If the image title doesn't give you a clue you can recreate the link with these 
 
 ### Problems?
 
-If your python interpreter sits in a different path than the shebang in the script you may need to edit the file or run it with `python /path/to/artthief`.
+If the script doesn't execute by itself you may need to run it with `python /path/to/artthief` or edit the shebang at the start of the script.
 
 Feel free to open an issue or contact me if you have other issues.
 
