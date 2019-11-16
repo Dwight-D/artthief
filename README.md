@@ -14,7 +14,7 @@ This program works nicely together with something like [pywal](https://github.co
 
 Switches:
 
-`-c / --clean` to clean the image library (delete previously downloaded files) before running. Use this to avoid taking up too much memory space.
+`-c / --clean` to clean the image library (delete previously downloaded files) before running. 
 
 ### Configuration
 
@@ -26,7 +26,7 @@ I.e. if the imgur link is `https://imgur.com/a/A123BC456` the entry should conta
 
 Image names have the following format:
 
-datestamp-galleryHash-imageHash-[imageTitleIfItExists].jpg. 
+`datestamp-galleryHash-imageHash-[imageTitleIfItExists].jpg`
 
 If the image title doesn't give you a clue you can recreate the link with these hashes and maybe find some more information there.
 
